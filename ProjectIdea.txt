@@ -1,0 +1,4 @@
+1.窗口中如何显示函数的输出值；
+按钮上显示的QString,把int等类型转换为,double a=0.123456;QString aa = QString::number(a);
+2.Trobii眼动仪，输出的作标值含义；
+3.识别按钮所在屏幕的坐标值；

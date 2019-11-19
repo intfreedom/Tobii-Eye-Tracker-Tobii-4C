@@ -34,10 +34,11 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *positionButton = new QPushButton;
     positionButton->setParent(this);
     positionButton->resize(300,100);
-    positionButton->move(100,300);
+    positionButton->move(108,308);
 //    QPoint p = positionButton->pos();
-//    QPoint qp = positionButton;
-    QPoint q = mapToGlobal(positionButton->pos());
+//    QPoint qp = positionButton::QCursor::pos();
+//    QPoint q = positionButton->mapToGlobal(positionButton->pos());
+    QPoint q = mapToGlobal(mapToParent(positionButton->pos()));
 
 
 
@@ -71,6 +72,8 @@ void MainWindow::timerEvent(QTimerEvent *event){
 //    win.positionButton->setText(QString("(%1, %2)").arg(q.x()).arg(q.y()));
     ui->lineEdit->setText(QString("(%1, %2)").arg(X).arg(Y));
     ui->lineEdit_2->setText(QString::number(W));
+//    ui->lineEdit->setText(QString());
+
 }
 
 void MainWindow::useShellSlot()
@@ -102,6 +105,7 @@ void MainWindow::read_emit(double a, int b)
     QString bb = QString("%1 %2").arg(ui->lineEdit_2->QWidget::pos().QPoint::x()).arg(ui->lineEdit_2->QWidget::pos().QPoint::ry());
     ui->lineEdit->setText(aa);
     ui->lineEdit_2->setText(bb);
+//    QString aa = QString("%1").arg(a);
     //只能获得这个对应当前应用的坐标，如果全屏的话，就相当于屏幕坐标了
     //弄清几大控件之间的关系；然后试着获取全局坐标；1.2各个坐标的位置控制
     //布局坐标，如何达到全屏状态，如何记录按钮等控件相对屏幕的全局坐标；

@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv); //a应用程序对象，QT中有且仅有一个应用程序对象；
     MainWindow w;   //创建一个自定义窗口；
-    w.show();
+    w.show();//show;
 
 
     qDebug() <<"-------------";

@@ -32,13 +32,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(myButton,&QPushButton::clicked, this, &MainWindow::useShellSlot);
 
     QPushButton *positionButton = new QPushButton;
-    positionButton->setParent(this);
+    positionButton->setParent(this);//show is or not
     positionButton->resize(300,100);
     positionButton->move(108,308);
 //    QPoint p = positionButton->pos();
 //    QPoint qp = positionButton::QCursor::pos();
 //    QPoint q = positionButton->mapToGlobal(positionButton->pos());
-    QPoint q = mapToGlobal(mapToParent(positionButton->pos()));
+//    QPoint q = mapToGlobal(mapToParent(positionButton->pos()));
+//    QPoint q = ui->lineEdit_3->mapToGlobal(ui->lineEdit_3->pos());
+//    QPoint q = ui->lineEdit_2->mapToGlobal(ui->lineEdit_2->pos());
+    QPoint q = ui->lineEdit->mapToGlobal(ui->lineEdit->pos());
+
 
 
 

@@ -1,0 +1,8 @@
+1.命名管道是由mkfifo函数创建 的 ，打开用open
+命名管道和匿名管道唯一的区别就是在创建的打开，一旦这些工作完成后，它们有相同的意义。
+#include <sys/types.h>
+#include <sys/stat.h>
+int mkfifo(const char *filename, mode_t mode);
+
+2.通过MATLAB将C/C++函数编译成MEX函数，在MATLAB中就可以调用了。
+https://blog.csdn.net/wislon/article/details/78777298

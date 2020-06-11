@@ -1,18 +1,124 @@
-1.ÃüÃû¹ÜµÀÊÇÓÉmkfifoº¯Êı´´½¨ µÄ £¬´ò¿ªÓÃopen
-ÃüÃû¹ÜµÀºÍÄäÃû¹ÜµÀÎ¨Ò»µÄÇø±ğ¾ÍÊÇÔÚ´´½¨µÄ´ò¿ª£¬Ò»µ©ÕâĞ©¹¤×÷Íê³Éºó£¬ËüÃÇÓĞÏàÍ¬µÄÒâÒå¡£
+ï»¿
+1. çœ¼åŠ¨ä»ªç¨‹åºå®‰è£…ç¯å¢ƒ(Software & Hardware)
+1.1 è½¯ä»¶ç‰ˆæœ¬ï¼Œubuntu19.10ï¼›Qt Creator 4.11.1(Based on Qt5.14.1);
+      I think oter version of software is ok too.
+1.1.1å®‰è£…Tobii Pro Eye Tracker Manager
+this web "https://www.tobiipro.com/zh/learn-and-support/downloads-pro/";
+you can search "Tobii Pro Eye Tracker Manager";
+then download "Tobii Pro Eye Tracker Manager for Linux 2.1.2";
+you can use "dpkg -i TobiiProEyeTrackerManager-2.1.0.deb" to install;
+
+1.2 EyeTracker Tobii 4C;
+1.3 Download the file: tobii.h, tobii_advanced.h, tobii_config.h, tobii_licensing.h,
+      tobii_streams.h, tobii_wearable.h, and libtobii_stream_engine.so.
+      you can download from here: https://github.com/intfreedom/Tobii-Eye-Tracker-Tobii-4C/tree/master/GUI/Demo/tobii,
+      https://github.com/intfreedom/Tobii-Eye-Tracker-Tobii-4C/tree/master/tobii_eye_tracker_linux_installer-master/lib/lib/x64
+
+2. ä½¿ç”¨Qtæ–°å»ºä¸€ä¸ªå·¥ç¨‹ï¼ŒæŠŠtobiiçš„å¤´æ–‡ä»¶ï¼ŒåŠ¨æ€é“¾æ¥åº“æ·»åŠ è‡³å·¥ç¨‹ï¼›
+    File->New File or Project...(Default Settings only)
+2.1 æ·»åŠ å¤´æ–‡ä»¶
+      Right-click the project name->Add  Existing Directory..., you must add all the "head file";
+      For example: "tobii.h, tobii_advanced.h, tobii_config.h, tobii_licensing.h,
+      tobii_streams.h, tobii_wearable.h";
+2.2 æ·»åŠ åŠ¨æ€é“¾æ¥åº“
+      Right-click the project name->Add  Library...->Internal library;
+      then, select the file: "libtobii_stream_engine.so"
+
+3. å­¦ä¹ å¦‚ä½•ä½¿ç”¨Qtç¼–ç¨‹ï¼Œè¯»å–å¤´æ–‡ä»¶ä¸­çš„å‡½æ•°ï¼›
+Learn how to program using Qt, using functions in the tobii head files;
+3.1 for this project, you must use tobii4C;
+for example, you can use this function to get the coordinates of the eyes.
+void gaze_point_callback(tobii_gaze_point_t const *gaze_point, void *user_data) 
+
+for now, I try use "pipe" to connect matalab an QT;
+
+åœ¨å¤´æ–‡ä»¶å¤„æ·»åŠ è¿™äº›ï¼Œå°è¯•"pipe";
+//add for pipe, start;
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <limits.h>
+#include <fcntl.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+//add for pipe, end;
+æŠŠä»¥ä¸‹æ–‡ä»¶ï¼Œ
+    //add for pipe, start;
+//    const char *fifo_name = "/tmp/my_fifo";
+//    int pipe_fd = -1;
+//    int data_fd = -1;
+//    int res = 0;
+//    const int open_mode = O_WRONLY;
+//    int bytes_sent = 0;
+//    char buffer[PIPE_BUF + 1];
+
+//    if(access(fifo_name, F_OK) == -1)
+//    {
+//        //ç®¡é“æ–‡ä»¶ä¸å­˜åœ¨
+//        //åˆ›å»ºå‘½åç®¡é“
+//        res = mkfifo(fifo_name, 0777);
+//        if(res != 0)
+//        {
+//            fprintf(stderr, "Could not create fifo %s\n", fifo_name);
+//            exit(EXIT_FAILURE);
+//        }
+//    }
+
+//    printf("Process %d opening FIFO O_WRONLY\n", getpid());
+//    //ä»¥åªå†™é˜»å¡æ–¹å¼æ‰“å¼€FIFOæ–‡ä»¶ï¼Œä»¥åªè¯»æ–¹å¼æ‰“å¼€æ•°æ®æ–‡ä»¶
+//    pipe_fd = open(fifo_name, open_mode);
+//    data_fd = open("Data.txt", O_RDONLY);
+//    printf("Process %d result %d\n", getpid(), pipe_fd);
+
+//    if(pipe_fd != -1)
+//    {
+//        int bytes_read = 0;
+//        //å‘æ•°æ®æ–‡ä»¶è¯»å–æ•°æ®
+//        bytes_read = read(data_fd, buffer, PIPE_BUF);
+//        buffer[bytes_read] = '\0';
+//        while(bytes_read > 0)
+//        {
+//            //å‘FIFOæ–‡ä»¶å†™æ•°æ®
+//            res = write(pipe_fd, buffer, bytes_read);
+//            if(res == -1)
+//            {
+//                fprintf(stderr, "Write error on pipe\n");
+//                exit(EXIT_FAILURE);
+//            }
+//            //ç´¯åŠ å†™çš„å­—èŠ‚æ•°ï¼Œå¹¶ç»§ç»­è¯»å–æ•°æ®
+//            bytes_sent += res;
+//            bytes_read = read(data_fd, buffer, PIPE_BUF);
+//            buffer[bytes_read] = '\0';
+//        }
+//        ::close(pipe_fd);
+//        ::close(data_fd);
+//    }
+//    else
+//        exit(EXIT_FAILURE);
+
+//    printf("Process %d finished\n", getpid());
+//    exit(EXIT_SUCCESS);
+    //add for pipe, end;
+
+
+
+
+1.å‘½åç®¡é“æ˜¯ç”±mkfifoå‡½æ•°åˆ›å»º çš„ ï¼Œæ‰“å¼€ç”¨open
+å‘½åç®¡é“å’ŒåŒ¿åç®¡é“å”¯ä¸€çš„åŒºåˆ«å°±æ˜¯åœ¨åˆ›å»ºçš„æ‰“å¼€ï¼Œä¸€æ—¦è¿™äº›å·¥ä½œå®Œæˆåï¼Œå®ƒä»¬æœ‰ç›¸åŒçš„æ„ä¹‰ã€‚
 #include <sys/types.h>
 #include <sys/stat.h>
 int mkfifo(const char *filename, mode_t mode);
-1.1ÈçºÎÊ¹ÓÃÃüÃû¹ÜµÀ
+1.1å¦‚ä½•ä½¿ç”¨å‘½åç®¡é“
 https://blog.csdn.net/ffsiwei/article/details/81031808
 1.1.1
-¹ÜµÀÎÄ¼şµÄ´´½¨£¬ÖÕ¶Ë£ºmkfifo my.p£¬¹ÜµÀÎÄ¼ş´óĞ¡Îª0£¬Ã»ÓĞ¹ØÏµµÄ½ø³ÌÒ²ÄÜÍ¨¹ı¹ÜµÀÃû
-À´È¡µ½¸Ã¹ÜµÀÖĞµÄ»º´æ£»
+ç®¡é“æ–‡ä»¶çš„åˆ›å»ºï¼Œç»ˆç«¯ï¼šmkfifo my.pï¼Œç®¡é“æ–‡ä»¶å¤§å°ä¸º0ï¼Œæ²¡æœ‰å…³ç³»çš„è¿›ç¨‹ä¹Ÿèƒ½é€šè¿‡ç®¡é“å
+æ¥å–åˆ°è¯¥ç®¡é“ä¸­çš„ç¼“å­˜ï¼›
 1.1.2
-´´½¨¹ÜµÀÎÄ¼ş£¬int mkfifo(const char* name, mode_t mode)
-´ò¿ª¹ÜµÀÎÄ¼ş£¬int fd=open(name, O_RDONLY);//¶Á
-	        int fd=open(name, O_WRONLY);//Ğ´
-1.1.2.1 ½«ÎÄ¼şĞ´ÈëÃüÃû¹ÜµÀÖĞ
+åˆ›å»ºç®¡é“æ–‡ä»¶ï¼Œint mkfifo(const char* name, mode_t mode)
+æ‰“å¼€ç®¡é“æ–‡ä»¶ï¼Œint fd=open(name, O_RDONLY);//è¯»
+	        int fd=open(name, O_WRONLY);//å†™
+1.1.2.1 å°†æ–‡ä»¶å†™å…¥å‘½åç®¡é“ä¸­
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -21,23 +127,23 @@ https://blog.csdn.net/ffsiwei/article/details/81031808
 
 int main(char argc,char *argv[])
 {
-        mkfifo("tp",0644);//´´½¨Ò»¸öÃüÃû¹ÜµÀ
-        int infd=open("abc",O_RDONLY);//±íÊ¾Òª¸´ÖÆµÄÎÄ¼ş
+        mkfifo("tp",0644);//åˆ›å»ºä¸€ä¸ªå‘½åç®¡é“
+        int infd=open("abc",O_RDONLY);//è¡¨ç¤ºè¦å¤åˆ¶çš„æ–‡ä»¶
         if(infd<0)
                 perror("open"),exit(1);
-        int outfd=open("tp",O_WRONLY);//Ğ´Èëµ½¹ÜµÀÎÄ¼şÖĞ
+        int outfd=open("tp",O_WRONLY);//å†™å…¥åˆ°ç®¡é“æ–‡ä»¶ä¸­
         if(outfd<0)
                 perror("open"),exit(1);
         char buf[100];
         int n=0;
         while((n=read(infd,buf,100))>0){
-                write(outfd,buf,n);//ÍùoutfdÖĞĞ´ÈëÊı¾İ
+                write(outfd,buf,n);//å¾€outfdä¸­å†™å…¥æ•°æ®
         }
         close(infd);
         close(outfd);
         return 0;
 }
-1.1.2.2 ½«¹ÜµÀÖĞµÄÊı¾İµ¼Èëµ½¿½±´ÎÄ¼şÖĞ
+1.1.2.2 å°†ç®¡é“ä¸­çš„æ•°æ®å¯¼å…¥åˆ°æ‹·è´æ–‡ä»¶ä¸­
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -46,10 +152,10 @@ int main(char argc,char *argv[])
 
 int main(int argc,char *argv[])
 {
-        int outfd=open("abc_bk",O_RDONLY|O_WRONLY|O_CREAT|O_TRUNC,0644);//ĞèÒª¿½±´µÄÎÄ¼ş
+        int outfd=open("abc_bk",O_RDONLY|O_WRONLY|O_CREAT|O_TRUNC,0644);//éœ€è¦æ‹·è´çš„æ–‡ä»¶
         if(outfd<0)
                 perror("open"),exit(1);
-        int infd=open("tp",O_RDONLY);//´ò¿ª¹ÜµÀ£¬½«¹ÜµÀÖĞµÄÊı¾İ¶Á×ß
+        int infd=open("tp",O_RDONLY);//æ‰“å¼€ç®¡é“ï¼Œå°†ç®¡é“ä¸­çš„æ•°æ®è¯»èµ°
         if(infd<0)
                 perror("open"),exit(1);
         char buf[100];
@@ -59,11 +165,14 @@ int main(int argc,char *argv[])
         }
         close(infd);
         close(outfd);
-        unlink("tp");//É¾³ıÖ¸¶¨Ãû×ÖµÄÎÄ¼ş
+        unlink("tp");//åˆ é™¤æŒ‡å®šåå­—çš„æ–‡ä»¶
         return 0;
 }
 
-1.2Ê¹ÓÃĞÂµÄ·½Ê½½¨Á¢ÃüÃû¹ÜµÀ£»
+1.2ä½¿ç”¨æ–°çš„æ–¹å¼å»ºç«‹å‘½åç®¡é“ï¼›
 
-2.Í¨¹ıMATLAB½«C/C++º¯Êı±àÒë³ÉMEXº¯Êı£¬ÔÚMATLABÖĞ¾Í¿ÉÒÔµ÷ÓÃÁË¡£
+2.é€šè¿‡MATLABå°†C/C++å‡½æ•°ç¼–è¯‘æˆMEXå‡½æ•°ï¼Œåœ¨MATLABä¸­å°±å¯ä»¥è°ƒç”¨äº†ã€‚
 https://blog.csdn.net/wislon/article/details/78777298
+
+
+1.3qtä½¿ç”¨https://mobile.51cto.com/symbian-270726.htmä¸å¤–éƒ¨é€šè®¯ï¼›

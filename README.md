@@ -7,10 +7,8 @@ this web "https://www.tobiipro.com/zh/learn-and-support/downloads-pro/";
 you can search "Tobii Pro Eye Tracker Manager";
 then download "Tobii Pro Eye Tracker Manager for Linux 2.1.2";
 you can use "dpkg -i TobiiProEyeTrackerManager-2.1.0.deb" to install;
-
 If you want to use the software of "TobiiProEyeTrackerManager", you must install two dependency packages.
-the tow packages: "tobii_config_0.1.6.111_amd64.deb", and "tobiiusbservice_l64U14_2.1.5-28fd4a.deb"
-the file is in ""
+the tow packages: "tobii_config_0.1.6.111_amd64.deb", and "tobiiusbservice_l64U14_2.1.5-28fd4a.deb", the file is in "https://github.com/intfreedom/Tobii-Eye-Tracker-Tobii-4C/tree/master/tobii_eye_tracker_linux_installer-master"
 
 4.1 EyeTracker Tobii 4C; Download the file: tobii.h, tobii_advanced.h, tobii_config.h, tobii_licensing.h,
       tobii_streams.h, tobii_wearable.h, and libtobii_stream_engine.so.
